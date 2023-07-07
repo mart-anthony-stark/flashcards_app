@@ -40,6 +40,20 @@ class Home extends StatelessWidget {
                   fontWeight: FontWeight.w600),
             ),
           ),
+          Container(
+            margin: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                color: const Color.fromARGB(255, 207, 207, 207)),
+            child: const TextField(
+                decoration: InputDecoration(
+                    hintText: "Search",
+                    border: InputBorder.none,
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: AppColor.PRIMARY,
+                    ))),
+          ),
           Obx(() {
             if (collectionController.isLoading.value) {
               return const Center(

@@ -18,7 +18,13 @@ class MainApp extends StatelessWidget {
         // Define the default brightness and colors.
         brightness: Brightness.light,
         primaryColor: AppColor.PRIMARY,
+        textSelectionTheme:
+            const TextSelectionThemeData(cursorColor: AppColor.PRIMARY),
 
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.purple, // Set the primary color swatch
+          accentColor: AppColor.SECONDARY, // Set the accent color here
+        ),
         // Define the default `TextTheme`. Use this to specify the default
         // text styling for headlines, titles, bodies of text, and more.
         textTheme: const TextTheme(

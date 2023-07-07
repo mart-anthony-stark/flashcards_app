@@ -32,10 +32,21 @@ class CollectionsCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        collectionController.collectionList[index].title,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 18),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            collectionController.collectionList[index].title,
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 18),
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.menu,
+                                color: Colors.white,
+                              ))
+                        ],
                       ),
                       const SizedBox(height: 10),
                       Text(
