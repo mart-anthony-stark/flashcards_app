@@ -26,42 +26,60 @@ class Home extends StatelessWidget {
           Icons.add,
         ),
       ),
-      body: Obx(() {
-        if (collectionController.isLoading.value) {
-          return const Center(
-              child: CircularProgressIndicator(
-            color: AppColor.PRIMARY,
-          ));
-        } else {
-          return ListView.builder(
-              itemCount: collectionController.collectionList.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 10,
-                  color: AppColor.SECONDARY,
-                  margin: const EdgeInsets.all(10),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Text(
-                          collectionController.collectionList[index].title,
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 18),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              "Flashcard Collections",
+              style: TextStyle(
+                  color: AppColor.PRIMARY,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600),
+            ),
+          ),
+          Obx(() {
+            if (collectionController.isLoading.value) {
+              return const Center(
+                  child: CircularProgressIndicator(
+                color: AppColor.PRIMARY,
+              ));
+            } else {
+              return Expanded(
+                child: ListView.builder(
+                    itemCount: collectionController.collectionList.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        elevation: 10,
+                        color: AppColor.SECONDARY,
+                        margin: const EdgeInsets.all(10),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Text(
+                                collectionController
+                                    .collectionList[index].title,
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 18),
+                              ),
+                              Text(
+                                collectionController
+                                    .collectionList[index].description,
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 15),
+                              ),
+                            ],
+                          ),
                         ),
-                        Text(
-                          collectionController
-                              .collectionList[index].description,
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 15),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              });
-        }
-      }),
+                      );
+                    }),
+              );
+            }
+          }),
+        ],
+      ),
     );
   }
 
