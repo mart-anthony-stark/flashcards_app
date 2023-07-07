@@ -8,6 +8,12 @@ class CollectionController extends GetxController {
   var collectionList = <CollectionModel>[].obs;
   SqlService collectionService = SqlService(table: "collections");
 
+  @override
+  void onInit() {
+    fetchCollections();
+    super.onInit();
+  }
+
   void fetchCollections() async {
     try {
       isLoading(true);

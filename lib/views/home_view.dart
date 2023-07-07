@@ -1,28 +1,14 @@
 import 'package:flashcards_app/common/app_color.dart';
 import 'package:flashcards_app/common/app_string.dart';
-import 'package:flashcards_app/models/collection.dart';
-import 'package:flashcards_app/services/sql_service.dart';
+import 'package:flashcards_app/controllers/collection_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class Home extends StatelessWidget {
+  Home({Key? key}) : super(key: key);
 
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  SqlService collectionsService = SqlService(table: 'collections');
-
-  void getCollections() async {
-    List<CollectionModel> collections =
-        await collectionsService.getAll<CollectionModel>();
-  }
-
-  void createCollection() async {
-    await collectionsService.save({'title': "title1", 'description': "desc"});
-  }
+  final CollectionController collectionController =
+      Get.put(CollectionController());
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +17,49 @@ class _HomeState extends State<Home> {
         title: const Text(AppString.TITLE),
         backgroundColor: AppColor.PRIMARY,
       ),
-      body: Center(
-        child: Column(children: [
-          ElevatedButton(
-              onPressed: getCollections, child: const Text('Get Collections'))
-        ]),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: AppColor.PRIMARY,
+        child: const Icon(
+          Icons.add,
+        ),
       ),
+      body: Obx(() {
+        if (collectionController.isLoading.value) {
+          return const Center(
+              child: CircularProgressIndicator(
+            color: AppColor.PRIMARY,
+          ));
+        } else {
+          return ListView.builder(
+              itemCount: collectionController.collectionList.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 10,
+                  color: AppColor.SECONDARY,
+                  margin: const EdgeInsets.all(10),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          collectionController.collectionList[index].title,
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 18),
+                        ),
+                        Text(
+                          collectionController
+                              .collectionList[index].description,
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 15),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              });
+        }
+      }),
     );
   }
 }
