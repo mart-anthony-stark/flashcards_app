@@ -10,12 +10,16 @@ class CollectionsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final CollectionController collectionController =
         Get.put(CollectionController());
-
-    return Expanded(
+    return SizedBox(
+      height: 200, // Set a fixed height for the horizontal ListView
       child: ListView.builder(
-          itemCount: collectionController.collectionList.length,
-          itemBuilder: (context, index) {
-            return Card(
+        scrollDirection:
+            Axis.horizontal, // Set the scroll direction to horizontal
+        itemCount: collectionController.collectionList.length,
+        itemBuilder: (context, index) {
+          return SizedBox(
+            width: 300,
+            child: Card(
               elevation: 10,
               color: AppColor.SECONDARY,
               margin: const EdgeInsets.all(10),
@@ -25,55 +29,30 @@ class CollectionsCard extends StatelessWidget {
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              collectionController.collectionList[index].title,
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 18),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              collectionController
-                                  .collectionList[index].description,
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 201, 201, 201),
-                                  fontSize: 15),
-                            ),
-                          ],
+                      Text(
+                        collectionController.collectionList[index].title,
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        collectionController.collectionList[index].description,
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 201, 201, 201),
+                          fontSize: 15,
                         ),
                       ),
-                      Row(
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              iconSize: 20,
-                              icon: const Icon(
-                                Icons.edit,
-                                color: Colors.green,
-                              )),
-                          IconButton(
-                              onPressed: () {},
-                              iconSize: 20,
-                              icon: const Icon(
-                                Icons.delete,
-                                color: Colors.red,
-                              )),
-                        ],
-                      )
                     ],
                   ),
                 ),
               ),
-            );
-          }),
+            ),
+          );
+        },
+      ),
     );
   }
 }
