@@ -25,4 +25,14 @@ class CollectionController extends GetxController {
       isLoading(false);
     }
   }
+
+  void createCollection(String title, String description) async {
+    try {
+      await collectionService
+          .save({'title': title, "description": description});
+      fetchCollections();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 }

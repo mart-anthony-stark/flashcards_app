@@ -9,6 +9,8 @@ class Home extends StatelessWidget {
 
   final CollectionController collectionController =
       Get.put(CollectionController());
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -77,11 +79,13 @@ class Home extends StatelessWidget {
             style:
                 TextStyle(color: AppColor.PRIMARY, fontWeight: FontWeight.bold),
           )),
-          const TextField(
-            decoration: InputDecoration(hintText: "Title"),
+          TextField(
+            controller: _titleController,
+            decoration: const InputDecoration(hintText: "Title"),
           ),
-          const TextField(
-            decoration: InputDecoration(hintText: "Description"),
+          TextField(
+            controller: _descriptionController,
+            decoration: const InputDecoration(hintText: "Description"),
           ),
           const SizedBox(
             height: 30,
@@ -93,7 +97,18 @@ class Home extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (_titleController.text == "" ||
+                          _descriptionController.text == "") {
+                        Get.snackbar("Missing Inputs",
+                            "Title and description fields are required",
+                            snackPosition: SnackPosition.BOTTOM);
+                        return;
+                      }
+                      collectionController.createCollection(
+                          _titleController.text, _descriptionController.text);
+                      closeBottomSheet();
+                    },
                     style: const ButtonStyle(
                         backgroundColor:
                             MaterialStatePropertyAll(AppColor.PRIMARY)),
@@ -108,7 +123,7 @@ class Home extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.back(closeOverlays: true);
+                    closeBottomSheet();
                   },
                   style: const ButtonStyle(
                       backgroundColor:
@@ -124,5 +139,11 @@ class Home extends StatelessWidget {
         ]),
       ),
     ));
+  }
+
+  void closeBottomSheet() {
+    _titleController.text = "";
+    _descriptionController.text = "";
+    Get.back(closeOverlays: true);
   }
 }
