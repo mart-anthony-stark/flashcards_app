@@ -18,7 +18,7 @@ class Home extends StatelessWidget {
         backgroundColor: AppColor.PRIMARY,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: showBottomSheet,
         backgroundColor: AppColor.PRIMARY,
         child: const Icon(
           Icons.add,
@@ -61,5 +61,68 @@ class Home extends StatelessWidget {
         }
       }),
     );
+  }
+
+  void showBottomSheet() {
+    Get.bottomSheet(Container(
+      height: 400,
+      color: Colors.white,
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(children: <Widget>[
+          const Center(
+              child: Text(
+            "Add Collection",
+            style:
+                TextStyle(color: AppColor.PRIMARY, fontWeight: FontWeight.bold),
+          )),
+          const TextField(
+            decoration: InputDecoration(hintText: "Title"),
+          ),
+          const TextField(
+            decoration: InputDecoration(hintText: "Description"),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: const ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll(AppColor.PRIMARY)),
+                    child: const Text(
+                      "Save",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.back(closeOverlays: true);
+                  },
+                  style: const ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll(AppColor.SECONDARY)),
+                  child: const Text(
+                    "Cancel",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          )
+        ]),
+      ),
+    ));
   }
 }
