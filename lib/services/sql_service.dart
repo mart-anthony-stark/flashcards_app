@@ -34,7 +34,7 @@ class SqlService {
   Future<List<T>> getAll<T>() async {
     final db = await SqlService.db();
     final List<Map<String, dynamic>> results =
-        await db.query(table, orderBy: 'id');
+        await db.query(table, orderBy: 'createdAt DESC');
     return results.map<T>((data) => _mapToModel<T>(data)).toList();
   }
 

@@ -35,4 +35,13 @@ class CollectionController extends GetxController {
       debugPrint(e.toString());
     }
   }
+
+  void deleteCollection(int id) async {
+    try {
+      await collectionService.deleteOne(id);
+      fetchCollections();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 }

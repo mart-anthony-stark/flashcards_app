@@ -60,8 +60,16 @@ class Home extends StatelessWidget {
                   child: CircularProgressIndicator(
                 color: AppColor.PRIMARY,
               ));
+            } else if (collectionController.collectionList.isNotEmpty) {
+              return CollectionsCard();
             } else {
-              return const CollectionsCard();
+              return const Center(
+                child: Text(
+                  'No collections to show.',
+                  style: TextStyle(
+                      color: AppColor.SECONDARY, fontWeight: FontWeight.w600),
+                ),
+              );
             }
           }),
         ],
