@@ -1,5 +1,6 @@
 import 'package:flashcards_app/common/app_color.dart';
 import 'package:flashcards_app/common/app_string.dart';
+import 'package:flashcards_app/views/edit_collection_view.dart';
 import 'package:flashcards_app/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -35,7 +36,10 @@ class MainApp extends StatelessWidget {
       ),
       title: AppString.TITLE,
       initialRoute: "/",
-      getPages: [GetPage(name: "/", page: () => Home())],
+      getPages: [
+        GetPage(name: "/", page: () => Home()),
+        GetPage(name: "/edit-collection", page: () => const EditCollection())
+      ],
     );
   }
 }

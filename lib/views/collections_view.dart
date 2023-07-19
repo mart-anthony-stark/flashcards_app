@@ -11,30 +11,6 @@ class CollectionsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void showContextMenu(
-        BuildContext context, TapDownDetails tapPosition) async {
-      final RenderBox renderBox = context.findRenderObject() as RenderBox;
-      final Offset buttonPosition =
-          renderBox.globalToLocal(tapPosition.globalPosition);
-
-      print('Button position: $buttonPosition');
-      final value = await showMenu<String>(
-        context: context,
-        position: RelativeRect.fromLTRB(buttonPosition.dy, buttonPosition.dx, 0,
-            0), // Adjust position if needed
-        items: [
-          const PopupMenuItem<String>(
-            value: 'edit',
-            child: Text('Edit'),
-          ),
-          const PopupMenuItem<String>(
-            value: 'delete',
-            child: Text('Delete'),
-          ),
-        ],
-      );
-    }
-
     return SizedBox(
       height: 200,
       child: ListView.builder(
@@ -129,7 +105,17 @@ class CollectionsCard extends StatelessWidget {
           leading: const Icon(Icons.edit_outlined, color: Colors.green),
           title: const Text('Edit', style: TextStyle(color: AppColor.PRIMARY)),
           onTap: () {
-            Get.back(closeOverlays: true);
+            var collection = collectionController.collectionList
+                .where((c) => c.id == id)
+                .toList();
+            if (collection.isNotEmpty) {
+              Get.toNamed("/edit-collection", arguments: {
+                'id': id,
+                'title': collection[0].title,
+                'description': collection[0].description
+              });
+            }
+            // Get.back(closeOverlays: true);
           },
         ),
         ListTile(

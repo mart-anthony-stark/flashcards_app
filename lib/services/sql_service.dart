@@ -14,6 +14,17 @@ class SqlService {
       description TEXT,
       createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     )""");
+
+    // Create the 'cards' table
+    await database.execute('''
+      CREATE TABLE cards (
+      id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+      question TEXT,
+      answer TEXT,
+      collection_id INTEGER,
+      FOREIGN KEY (collection_id) REFERENCES collections(id) ON DELETE CASCADE
+      )
+    ''');
   }
 
   static Future<sql.Database> db() async {
@@ -31,10 +42,10 @@ class SqlService {
     return id;
   }
 
-  Future<List<T>> getAll<T>() async {
+  Future<List<T>> getAll<T>({where}) async {
     final db = await SqlService.db();
     final List<Map<String, dynamic>> results =
-        await db.query(table, orderBy: 'createdAt DESC');
+        await db.query(table, orderBy: 'createdAt DESC', where: where);
     return results.map<T>((data) => _mapToModel<T>(data)).toList();
   }
 
